@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 export const MainCardContainer = styled(motion.div)`
+  margin: 0;
   width: 70%;
   background-color: #141414;
   border-radius: 24px;
@@ -29,7 +30,7 @@ export const CardDetailInfo = styled.span`
 export const CharacterName = styled.h2`
   font-family: "BLACK";
   color: white;
-  margin: 24px; ;
+  margin: 24px 24px 72px 24px;
 `;
 
 export const WorkInput = styled(motion.div)`

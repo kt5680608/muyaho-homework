@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { motion } from "framer-motion";
+import { BsTypeBold } from "react-icons/bs";
 export const GlobalStyles = createGlobalStyle`
     :root {
         --g-color-black: #3A3A3A;
@@ -34,6 +35,7 @@ export const GlobalStyles = createGlobalStyle`
       @supports (-webkit-touch-callout: none) {
         min-height: -webkit-fill-available;
         }
+    
       p{
             margin: 0;
             padding: 0;
@@ -140,4 +142,16 @@ export const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+`;
+
+export const CardKeyContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const InputForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
