@@ -103,7 +103,8 @@ export const Input = styled.input`
   margin: 18px;
 `;
 
-export const Button = styled.div`
+export const Button = styled(motion.div)`
+  cursor: pointer;
   background-color: blue;
   box-sizing: border-box;
   height: 36px;

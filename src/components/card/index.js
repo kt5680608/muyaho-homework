@@ -13,7 +13,7 @@ function Card(props) {
   const [data, setData] = useState(
     JSON.parse(localStorage.getItem(props.item))
   );
-  const [workArray, setWorkArray] = useState(data.work);
+  const [workArray, setWorkArray] = useState(data?.work);
   const onChangeArrayValue = (index) => {
     const tmpArray = [...workArray];
     tmpArray[index].doWork = !workArray[index].doWork;

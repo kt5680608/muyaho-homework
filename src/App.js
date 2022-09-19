@@ -14,38 +14,55 @@ import {
 } from "./global-styles";
 function App() {
   const newData = dataForm;
-  const [characterName, setCharacterName] = useState("");
-  const [characterLevel, setCharacterLevel] = useState();
-  const [array, setArray] = useState(Object.keys(localStorage).sort());
+  const [characterName, setCharacterName] = useState(""); // 캐릭터이름 input
+  const [characterLevel, setCharacterLevel] = useState(); // 캐릭터레벨 Input
+
+  const [array, setArray] = useState(
+    Object.keys(localStorage).filter((item) => {
+      return item !== "time";
+    })
+  );
   const [_, setSortedArray] = useState(
-    array.map((item) => {
+    array.filter((item) => {
       const orderValue = JSON.parse(localStorage.getItem(item))?.order;
       return orderValue;
     })
   );
+
+  // 캐릭터 추가 함수
+  const addCharacter = () => {
+    newData.name = characterName;
+    if (typeof characterLevel === undefined) {
+      newData.level = 0;
+    } else {
+      newData.level = characterLevel;
+    }
+    newData.order = Object.keys(localStorage).length + 1;
+    localStorage.setItem(characterName, JSON.stringify(newData));
+  };
+
+  // 제출 후 초기화 함수
+  const initializeCharacterInfo = () => {
+    setCharacterName("");
+    setCharacterLevel(0);
+  };
+
   useEffect(() => {
-    setArray(Object.keys(localStorage).sort());
+    // localStorage.setItem(JSON.stringify("time", { currentTime: 1, initialTime: 1 }));
+    setArray(
+      Object.keys(localStorage).filter((item) => {
+        return item !== "time";
+      })
+    );
     setSortedArray(
       array.map((item) => {
         const orderValue = JSON.parse(localStorage.getItem(item))?.order;
         return orderValue;
       })
     );
+    console.log(array);
   }, [Object.keys(localStorage).length]);
-  const addCharacter = () => {
-    newData.name = characterName;
-    if (typeof characterLevel !== Number) {
-      newData.level = 0;
-    } else {
-      newData.level = characterLevel;
-    }
-    newData.order = Object.keys(localStorage).length;
-    localStorage.setItem(characterName, JSON.stringify(newData));
-  };
-  const initializeCharacterInfo = () => {
-    setCharacterName("");
-    setCharacterLevel(0);
-  };
+
   return (
     <MainContainer>
       <TitleContainer>
@@ -55,7 +72,7 @@ function App() {
         {array.map((item, index) => {
           const itemArray = JSON.parse(localStorage.getItem(item));
           return (
-            <CardKeyContainer key={itemArray.order}>
+            <CardKeyContainer key={itemArray?.order}>
               <Card
                 item={item}
                 delay={0.1 * index}
@@ -77,16 +94,34 @@ function App() {
               placeholder="캐릭터명"
               type="text"
               value={characterName}
-              onChange={(e) => setCharacterName(e.target.value)}
+              onChange={(e) => {
+                setCharacterName(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && characterName !== "") {
+                  addCharacter();
+                  initializeCharacterInfo();
+                }
+              }}
             />
             <Input
               placeholder="캐릭터레벨"
               type="number"
               value={characterLevel}
-              onChange={(e) => setCharacterLevel(e.target.value)}
+              onChange={(e) => {
+                setCharacterLevel(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && characterName !== "") {
+                  addCharacter();
+                  initializeCharacterInfo();
+                }
+              }}
             />
           </InputForm>
           <Button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => {
               if (characterName !== "") {
                 addCharacter();
