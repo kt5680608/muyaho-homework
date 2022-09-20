@@ -14,6 +14,7 @@ function Card(props) {
     JSON.parse(localStorage.getItem(props.item))
   );
   const [workArray, setWorkArray] = useState(data?.work);
+  const [reset, setReset] = useState(props.reset);
   const onChangeArrayValue = (index) => {
     const tmpArray = [...workArray];
     tmpArray[index].doWork = !workArray[index].doWork;
@@ -22,7 +23,11 @@ function Card(props) {
 
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem(props.item)));
-  }, [props.arrayLength]);
+    setReset(props.reset);
+    if (reset) {
+      setWorkArray(data?.work);
+    }
+  }, [props.arrayLength, props.reset]);
   return (
     <MainCardContainer
       initial={{ y: 30, opacity: 0 }}
@@ -37,12 +42,13 @@ function Card(props) {
         {data?.work.map((item, index) => {
           return (
             data.level >= item?.limit && (
-              <CardDetail key={item.order}>
+              <CardDetail>
                 <CardDetailInfo style={{ color: " white" }}>
                   {item.name}
                 </CardDetailInfo>
                 {item.doWork ? (
                   <div
+                    key={item.order}
                     onClick={() => {
                       onChangeArrayValue(index);
                       const bool = item.doWork;
@@ -53,13 +59,14 @@ function Card(props) {
                     <WorkInput
                       whileHover={{ scale: 1.3 }}
                       whileTap={{ scale: 0.5 }}
-                      checked={workArray[index].doWork}
+                      checked={item?.doWork}
                     >
                       <BsCheck2 color="white" style={{ strokeWidth: 2 }} />
                     </WorkInput>
                   </div>
                 ) : (
                   <div
+                    key={item.order}
                     onClick={() => {
                       onChangeArrayValue(index);
                       const bool = item.doWork;
@@ -70,7 +77,7 @@ function Card(props) {
                     <WorkInput
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.5 }}
-                      checked={workArray[index].doWork}
+                      checked={item?.doWork}
                     />
                   </div>
                 )}

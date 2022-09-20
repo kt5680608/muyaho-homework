@@ -1,6 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { motion } from "framer-motion";
-import { BsTypeBold } from "react-icons/bs";
 export const GlobalStyles = createGlobalStyle`
     :root {
         --g-color-black: #3A3A3A;
@@ -91,6 +90,7 @@ export const GridContainer = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
+
   gap: 24px;
 `;
 
@@ -135,14 +135,15 @@ export const SubmitContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${(props) => (props.loading ? "center" : "space-between")};
 `;
 export const MainContainer = styled.div`
   width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  justify-content: space-between;
 `;
 
 export const CardKeyContainer = styled.div`
