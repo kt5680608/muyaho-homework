@@ -21,7 +21,7 @@ function App() {
   const [reset, setReset] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
-
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const [characterNameArray, setCharacterNameArray] = useState(
     Object.keys(localStorage).filter((item) => {
       return item !== "time";
@@ -32,7 +32,7 @@ function App() {
     setLoading(true);
     try {
       const response = await axios
-        .get(`Profile/Character/${item}`)
+        .get(`${PROXY}/Profile/Character/${item}`)
         .then((html) => {
           const $ = cheerio.load(html.data);
           const data = $(
@@ -83,7 +83,7 @@ function App() {
         const data = JSON.parse(localStorage.getItem(item));
         data.work.map((workData) => {
           if (workData.reset === "day") {
-            workData.doWork = false;
+            return (workData.doWork = false);
           }
         });
         localStorage.setItem(item, JSON.stringify(data));
@@ -111,7 +111,7 @@ function App() {
         const data = JSON.parse(localStorage.getItem(item));
         data.work.map((workData) => {
           if (workData.reset === "week") {
-            workData.doWork = false;
+            return (workData.doWork = false);
           }
         });
         localStorage.setItem(item, JSON.stringify(data));
