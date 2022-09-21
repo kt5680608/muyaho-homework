@@ -6,6 +6,7 @@ export const GlobalStyles = createGlobalStyle`
         --g-color-grey100: #616161;
         --g-color-grey50: #7F7F7F; 
         --g-color-background: #1a1a1a;
+        --g-color-logo: #a2ff55;
         --system-color-codeTint1: #fc6;
         --system-color-codeTint2: #adf;
         --system-color-codeTint3: #f97;
@@ -79,19 +80,13 @@ export const GlobalStyles = createGlobalStyle`
     }
 `;
 
-export const MainTitle = styled.h1`
-  font-family: "R-FLEX-BLACK", "BLACK";
-
-  color: white;
-  font-size: 36px;
-`;
 export const GridContainer = styled(motion.div)`
-  width: 90vw;
+  width: 96%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
 
-  gap: 24px;
+  gap: 36px;
 `;
 
 export const Input = styled.input`
@@ -119,13 +114,6 @@ export const Button = styled(motion.div)`
   border-radius: 24px;
 `;
 
-export const TitleContainer = styled.div`
-  height: 128px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const SubmitContainer = styled(motion.div)`
   height: 396px;
   width: 20vw;
@@ -138,12 +126,21 @@ export const SubmitContainer = styled(motion.div)`
   justify-content: ${(props) => (props.loading ? "center" : "space-between")};
 `;
 export const MainContainer = styled.div`
-  width: 100vw;
+  width: 96%;
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const Page = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  background-color: var(--g-color-background);
+  display: flex;
+  justify-content: center;
 `;
 
 export const CardKeyContainer = styled.div`

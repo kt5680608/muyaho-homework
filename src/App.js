@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Footer, Spinner } from "./components";
+import { Card, Footer, Spinner, Header } from "./components";
 import * as cheerio from "cheerio";
 import { dataForm } from "./data/data-form";
 import axios from "axios";
@@ -9,8 +9,7 @@ import {
   MainContainer,
   Button,
   SubmitContainer,
-  TitleContainer,
-  MainTitle,
+  Page,
   CardKeyContainer,
   InputForm,
 } from "./global-styles";
@@ -145,76 +144,76 @@ function App() {
   }, [submit]);
 
   return (
-    <MainContainer>
-      <TitleContainer>
-        <MainTitle>Muyaho 숙제검사기</MainTitle>
-      </TitleContainer>
-      <GridContainer>
-        {characterNameArray.map((item, index) => {
-          const itemArray = JSON.parse(localStorage.getItem(item));
-          return (
-            <CardKeyContainer key={itemArray?.order}>
-              <Card
-                reset={reset}
-                item={item}
-                delay={0.1 * index}
-                arrayLength={characterNameArray.length}
-              />
-            </CardKeyContainer>
-          );
-        })}
-        <SubmitContainer
-          loading={loading}
-          initial={{ y: 30, opacity: 0 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-            transition: {
-              duration: 0.4,
-              delay: 0.1 * (characterNameArray.length + 1),
-            },
-          }}
-        >
-          {loading ? (
-            <Spinner />
-          ) : (
-            <>
-              <InputForm>
-                <Input
-                  placeholder="캐릭터명"
-                  type="text"
-                  value={characterName}
-                  onChange={(e) => {
-                    setCharacterName(e.target.value);
-                  }}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter" && characterName !== "") {
+    <Page>
+      <MainContainer>
+        <Header />
+        <GridContainer>
+          {characterNameArray.map((item, index) => {
+            const itemArray = JSON.parse(localStorage.getItem(item));
+            return (
+              <CardKeyContainer key={itemArray?.order}>
+                <Card
+                  reset={reset}
+                  item={item}
+                  delay={0.1 * index}
+                  arrayLength={characterNameArray.length}
+                />
+              </CardKeyContainer>
+            );
+          })}
+          <SubmitContainer
+            loading={loading}
+            initial={{ y: 30, opacity: 0 }}
+            animate={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.4,
+                delay: 0.1 * (characterNameArray.length + 1),
+              },
+            }}
+          >
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                <InputForm>
+                  <Input
+                    placeholder="캐릭터명"
+                    type="text"
+                    value={characterName}
+                    onChange={(e) => {
+                      setCharacterName(e.target.value);
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter" && characterName !== "") {
+                        addCharacter();
+                        initializeCharacterInfo();
+                      }
+                    }}
+                  />
+                </InputForm>
+                <Button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => {
+                    if (characterName !== "") {
                       addCharacter();
                       initializeCharacterInfo();
+                    } else {
+                      localStorage.clear();
                     }
                   }}
-                />
-              </InputForm>
-              <Button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  if (characterName !== "") {
-                    addCharacter();
-                    initializeCharacterInfo();
-                  } else {
-                    localStorage.clear();
-                  }
-                }}
-              >
-                등록
-              </Button>
-            </>
-          )}
-        </SubmitContainer>
-      </GridContainer>
-      <Footer />
-    </MainContainer>
+                >
+                  등록
+                </Button>
+              </>
+            )}
+          </SubmitContainer>
+        </GridContainer>
+        <Footer />
+      </MainContainer>
+    </Page>
   );
 }
 
