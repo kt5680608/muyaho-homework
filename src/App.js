@@ -3,6 +3,7 @@ import { Card, Footer, Spinner, Header } from "./components";
 import * as cheerio from "cheerio";
 import { dataForm } from "./data/data-form";
 import axios from "axios";
+
 import {
   GridContainer,
   Input,
@@ -12,20 +13,28 @@ import {
   Page,
   CardKeyContainer,
   InputForm,
+  CheckIcon,
 } from "./global-styles";
+import { motion, useAnimation } from "framer-motion";
+
 function App() {
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const newData = dataForm;
   const [characterName, setCharacterName] = useState(""); // 캐릭터이름 input
   const [_, setCharacterLevel] = useState(0); // 캐릭터레벨 Input
   const [reset, setReset] = useState(false);
+  const [hardReset, setHardReset] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const [characterNameArray, setCharacterNameArray] = useState(
     Object.keys(localStorage).filter((item) => {
       return item !== "time";
     })
   );
+  const [isHover, setIsHover] = useState(false);
+  const textHoverAnimation = useAnimation();
+  const IconHoverAnimation = useAnimation();
 
   const getHtml = async (item) => {
     setLoading(true);
@@ -54,13 +63,16 @@ function App() {
   // 캐릭터 추가 함수
   const addCharacter = async () => {
     await getHtml(characterName);
-    console.log(newData.level);
     newData.name = characterName;
     newData.order = Object.keys(localStorage).length + 1;
     setSubmit(!submit);
     await localStorage.setItem(characterName, JSON.stringify(newData));
   };
 
+  const deleteCharacter = (item) => {
+    localStorage.removeItem(item);
+    setDeleteState(!deleteState);
+  };
   const getDateDiff = () => {
     const date = JSON.parse(localStorage.getItem("time"));
     const initialDate = new Date(date.initialTime);
@@ -80,7 +92,7 @@ function App() {
       );
       characterNameArray.map((item) => {
         const data = JSON.parse(localStorage.getItem(item));
-        data.work.map((workData) => {
+        data?.work.map((workData) => {
           if (workData.reset === "day") {
             return (workData.doWork = false);
           }
@@ -118,6 +130,11 @@ function App() {
     }
   };
 
+  const doHardRest = () => {
+    localStorage.clear();
+    setHardReset(true);
+  };
+
   // 제출 후 초기화 함수
   const initializeCharacterInfo = () => {
     setCharacterName("");
@@ -125,7 +142,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("useEffect run");
     localStorage.setItem(
       "time",
       JSON.stringify({
@@ -141,7 +157,23 @@ function App() {
         return item !== "time";
       })
     );
-  }, [submit]);
+  }, [submit, deleteState]);
+
+  useEffect(() => {
+    if (isHover) {
+      textHoverAnimation.start({ y: -100, display: "none" });
+      IconHoverAnimation.start({ y: 0, display: "block" });
+    } else {
+      textHoverAnimation.start({ y: 0, display: "block" });
+      IconHoverAnimation.start({ y: 100, display: "none" });
+    }
+  }, [isHover]);
+
+  useEffect(() => {
+    if (hardReset) {
+      window.location.reload();
+    }
+  }, [hardReset]);
 
   return (
     <Page>
@@ -150,19 +182,24 @@ function App() {
         <GridContainer>
           {characterNameArray.map((item, index) => {
             const itemArray = JSON.parse(localStorage.getItem(item));
+
             return (
-              <CardKeyContainer key={itemArray?.order}>
-                <Card
-                  reset={reset}
-                  item={item}
-                  delay={0.1 * index}
-                  arrayLength={characterNameArray.length}
-                />
-              </CardKeyContainer>
+              itemArray !== null && (
+                <CardKeyContainer key={itemArray?.order}>
+                  <Card
+                    reset={reset}
+                    delete={deleteState}
+                    deleteCharacter={deleteCharacter}
+                    item={item}
+                    delay={0.1 * index}
+                    arrayLength={characterNameArray.length}
+                  />
+                </CardKeyContainer>
+              )
             );
           })}
           <SubmitContainer
-            loading={loading}
+            loading={loading ? 1 : 0}
             initial={{ y: 30, opacity: 0 }}
             animate={{
               y: 0,
@@ -196,6 +233,8 @@ function App() {
                 <Button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  onHoverStart={() => setIsHover(true)}
+                  onHoverEnd={() => setIsHover(false)}
                   onClick={() => {
                     if (characterName !== "") {
                       addCharacter();
@@ -205,13 +244,16 @@ function App() {
                     }
                   }}
                 >
-                  등록
+                  <motion.p animate={textHoverAnimation}>등록</motion.p>
+                  <motion.div animate={IconHoverAnimation}>
+                    <CheckIcon />
+                  </motion.div>
                 </Button>
               </>
             )}
           </SubmitContainer>
         </GridContainer>
-        <Footer />
+        <Footer hardReset={doHardRest} />
       </MainContainer>
     </Page>
   );

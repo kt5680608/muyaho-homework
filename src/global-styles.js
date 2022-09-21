@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { motion } from "framer-motion";
+import { FaCheck } from "react-icons/fa";
+
 export const GlobalStyles = createGlobalStyle`
     :root {
         --g-color-black: #3A3A3A;
@@ -53,8 +55,11 @@ export const GlobalStyles = createGlobalStyle`
     h1{
         font-family:   sans-serif;
         margin: 0;
-        padding: 0;
-        
+        padding: 0;   
+    }
+    h2{
+      margin: 0;
+      padding: 0;
     }
     p{
         font-family: sans-serif;
@@ -99,14 +104,16 @@ export const Input = styled.input`
 `;
 
 export const Button = styled(motion.div)`
+  overflow: hidden;
   cursor: pointer;
-  background-color: blue;
+  background-color: ${(props) => (props.type === "delete" ? "red" : "blue")};
   box-sizing: border-box;
   height: 36px;
   width: 72px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   border: none;
   padding: 12px;
   color: white;
@@ -119,7 +126,7 @@ export const SubmitContainer = styled(motion.div)`
   width: 20vw;
   background-color: #141414;
   border-radius: 24px;
-  padding: 24px;
+  padding: 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -153,4 +160,8 @@ export const InputForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const CheckIcon = styled(FaCheck)`
+  color: white;
 `;

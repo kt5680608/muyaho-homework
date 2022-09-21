@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const TitleContainer = styled.div`
   color: var(--g-color-background);
-  box-shadow: 0 6px 8px -5px;
   width: 100%;
   background-color: var(--g-color-background);
   height: 60px;
@@ -12,6 +11,7 @@ export const TitleContainer = styled.div`
   align-items: center;
   position: sticky;
   top: 0;
+  z-index: 999;
 `;
 
 export const MainTitle = styled.h1`

@@ -1,17 +1,27 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { FaTrashAlt } from "react-icons/fa";
+
 export const MainCardContainer = styled(motion.div)`
   margin: 0;
+  height: 396px;
   width: 70%;
   background-color: #141414;
   border-radius: 24px;
-  padding: 24px;
+  padding: 36px;
   display: flex;
   flex-direction: column;
-
+  justify-content: space-between;
   align-items: center;
 `;
 
+export const CardHeaderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24px;
+`;
 export const WorkContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -31,7 +41,8 @@ export const CardDetailInfo = styled.span`
 export const CharacterName = styled.h2`
   font-family: "BLACK";
   color: white;
-  margin: 24px 24px 72px 24px;
+  flex-basis: 100%;
+  text-align: center;
 `;
 
 export const WorkInput = styled(motion.div)`
@@ -83,13 +94,6 @@ export const Button = styled.div`
   border-radius: 24px;
 `;
 
-export const TitleContainer = styled.div`
-  height: 128px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const SubmitContainer = styled.div`
   height: 396px;
   width: 20vw;
@@ -100,4 +104,17 @@ export const SubmitContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const TrashIconButton = styled(motion.div)`
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+  border-radius: 50%;
+`;
+export const TrashIcon = styled(FaTrashAlt)`
+  color: white;
 `;
