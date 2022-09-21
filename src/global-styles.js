@@ -42,10 +42,6 @@ export const GlobalStyles = createGlobalStyle`
             margin: 0;
             padding: 0;
         }
-        hr{
-        margin: 4px;
-        width: 100%;
-        }
         pre{
         margin: 0;
         line-height: 1.5;
@@ -57,6 +53,12 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;   
     }
+
+    hr{
+        margin: 0px;
+        width: 100%;
+        border: 1px solid var(--g-color-background)
+        }
     h2{
       margin: 0;
       padding: 0;
@@ -87,11 +89,13 @@ export const GlobalStyles = createGlobalStyle`
 
 export const GridContainer = styled(motion.div)`
   width: 96%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
-
+  display: flex;
+  height: 102%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 36px;
+  overflow: hidden;
 `;
 
 export const Input = styled.input`
@@ -99,8 +103,8 @@ export const Input = styled.input`
   height: 24px;
   padding: 6px;
   border: none;
+  margin-right: 12px;
   border-radius: 24px;
-  margin: 18px;
 `;
 
 export const Button = styled(motion.div)`
@@ -122,15 +126,13 @@ export const Button = styled(motion.div)`
 `;
 
 export const SubmitContainer = styled(motion.div)`
-  height: 396px;
-  width: 20vw;
+  height: 30px;
+  width: 100%;
   background-color: #141414;
   border-radius: 24px;
   padding: 36px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: ${(props) => (props.loading ? "center" : "space-between")};
+  justify-content: ${(props) => (props.loading ? "center" : "center")};
 `;
 export const MainContainer = styled.div`
   width: 96%;
@@ -153,12 +155,13 @@ export const Page = styled.div`
 export const CardKeyContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 30%;
 `;
 
 export const InputForm = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 `;
 

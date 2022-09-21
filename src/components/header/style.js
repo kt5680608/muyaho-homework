@@ -13,6 +13,7 @@ export const TitleContainer = styled.div`
   position: sticky;
   top: 0;
   z-index: 999;
+  margin-bottom: 48px;
 `;
 
 export const MainTitle = styled.h1`

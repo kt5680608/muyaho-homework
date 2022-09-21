@@ -4,10 +4,11 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export const MainCardContainer = styled(motion.div)`
   margin: 0;
-  height: 396px;
-  width: 70%;
+  height: 360px;
+  width: 100%;
   background-color: #141414;
   border-radius: 24px;
+  gap: 24px;
   padding: 36px;
   display: flex;
   flex-direction: column;
@@ -15,17 +16,18 @@ export const MainCardContainer = styled(motion.div)`
   align-items: center;
 `;
 
-export const CardHeaderContainer = styled.div`
+export const CardHeaderContainer = styled(motion.div)`
+  cursor: pointer;
   display: flex;
+  height: 30px;
   width: 100%;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 24px;
 `;
 export const WorkContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 24px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 18px;
   width: 100%;
 `;
 
@@ -37,6 +39,8 @@ export const CardDetail = styled.div`
 `;
 export const CardDetailInfo = styled.span`
   font-family: "REGULAR";
+  font-size: 14px;
+  margin-right: 8px;
 `;
 export const CharacterName = styled.h2`
   font-family: "BLACK";
@@ -47,9 +51,10 @@ export const CharacterName = styled.h2`
 
 export const WorkInput = styled(motion.div)`
   border: none;
+  cursor: pointer;
   background-color: ${(props) => (props.checked ? "blue" : "white")};
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -76,7 +81,7 @@ export const Input = styled.input`
   padding: 6px;
   border: none;
   border-radius: 24px;
-  margin: 18px;
+  margin: 6px;
 `;
 
 export const Button = styled.div`

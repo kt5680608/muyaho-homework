@@ -28,7 +28,8 @@ function Card(props) {
   const [isHover, setIsHover] = useState(false);
   const textHoverAnimation = useAnimation();
   const IconHoverAnimation = useAnimation();
-
+  const mainContainerAnimation = useAnimation();
+  const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem(props.item)));
     setReset(props.reset);
@@ -47,22 +48,137 @@ function Card(props) {
       IconHoverAnimation.start({ y: 100, display: "none" });
     }
   }, [isHover]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      mainContainerAnimation.start({ height: "30px" });
+    } else {
+      mainContainerAnimation.start({ height: "360px" });
+    }
+  });
   return (
     <MainCardContainer
-      initial={{ y: 30, opacity: 0 }}
-      animate={{
-        y: 0,
-        opacity: 1,
-        transition: { duration: 0.6, delay: props.delay },
+      animate={mainContainerAnimation}
+      onClick={() => {
+        if (isOpen === false) {
+          setIsOpen(!isOpen);
+        }
       }}
     >
-      <CardHeaderContainer>
+      <CardHeaderContainer
+        whileHover={{ scale: 1.1 }}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+      >
         <CharacterName>{data?.name}</CharacterName>
       </CardHeaderContainer>
-      <WorkContainer>
+
+      <WorkContainer style={{ display: isOpen ? "grid" : "none" }}>
         {data?.work.map((item, index) => {
           return (
-            data.level >= item?.limit && (
+            data.level >= item?.limit &&
+            item.type === "non-laid" && (
+              <CardDetail>
+                <CardDetailInfo style={{ color: " white" }}>
+                  {item.name}
+                </CardDetailInfo>
+                {item.doWork ? (
+                  <div
+                    key={item.order}
+                    onClick={() => {
+                      onChangeArrayValue(index);
+                      const bool = item.doWork;
+                      item.doWork = !bool;
+                      localStorage.setItem(data.name, JSON.stringify(data));
+                    }}
+                  >
+                    <WorkInput
+                      whileHover={{ scale: 1.3 }}
+                      whileTap={{ scale: 0.5 }}
+                      checked={item?.doWork}
+                    >
+                      <BsCheck2 color="white" style={{ strokeWidth: 2 }} />
+                    </WorkInput>
+                  </div>
+                ) : (
+                  <div
+                    key={item.order}
+                    onClick={() => {
+                      onChangeArrayValue(index);
+                      const bool = item.doWork;
+                      item.doWork = !bool;
+                      localStorage.setItem(data.name, JSON.stringify(data));
+                    }}
+                  >
+                    <WorkInput
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.5 }}
+                      checked={item?.doWork}
+                    />
+                  </div>
+                )}
+              </CardDetail>
+            )
+          );
+        })}
+      </WorkContainer>
+      <hr style={{ display: isOpen ? "grid" : "none" }} />
+      <WorkContainer style={{ display: isOpen ? "grid" : "none" }}>
+        {data?.work.map((item, index) => {
+          return (
+            data.level >= item?.limit &&
+            item.type === "laid" && (
+              <CardDetail>
+                <CardDetailInfo style={{ color: " white" }}>
+                  {item.name}
+                </CardDetailInfo>
+                {item.doWork ? (
+                  <div
+                    key={item.order}
+                    onClick={() => {
+                      onChangeArrayValue(index);
+                      const bool = item.doWork;
+                      item.doWork = !bool;
+                      localStorage.setItem(data.name, JSON.stringify(data));
+                    }}
+                  >
+                    <WorkInput
+                      whileHover={{ scale: 1.3 }}
+                      whileTap={{ scale: 0.5 }}
+                      checked={item?.doWork}
+                    >
+                      <BsCheck2 color="white" style={{ strokeWidth: 2 }} />
+                    </WorkInput>
+                  </div>
+                ) : (
+                  <div
+                    key={item.order}
+                    onClick={() => {
+                      onChangeArrayValue(index);
+                      const bool = item.doWork;
+                      item.doWork = !bool;
+                      localStorage.setItem(data.name, JSON.stringify(data));
+                    }}
+                  >
+                    <WorkInput
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.5 }}
+                      checked={item?.doWork}
+                    />
+                  </div>
+                )}
+              </CardDetail>
+            )
+          );
+        })}
+      </WorkContainer>
+      <hr style={{ display: isOpen ? "grid" : "none" }} />
+      <WorkContainer style={{ display: isOpen ? "grid" : "none" }}>
+        {data?.work.map((item, index) => {
+          return (
+            data.level >= item?.limit &&
+            item.type === "abyss" && (
               <CardDetail>
                 <CardDetailInfo style={{ color: " white" }}>
                   {item.name}
@@ -108,6 +224,7 @@ function Card(props) {
         })}
       </WorkContainer>
       <Button
+        style={{ display: isOpen ? "flex" : "none" }}
         initial={{ y: 0 }}
         whileHover={{ scale: 1.1 }}
         onHoverStart={() => setIsHover(true)}

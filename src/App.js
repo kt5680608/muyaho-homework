@@ -130,7 +130,7 @@ function App() {
     }
   };
 
-  const doHardRest = () => {
+  const doHardReset = () => {
     localStorage.clear();
     setHardReset(true);
   };
@@ -142,8 +142,8 @@ function App() {
   };
 
   useEffect(() => {
+    setIsHover(false);
     const timeData = JSON.parse(localStorage.getItem("time"));
-
     if (timeData === null) {
       localStorage.setItem(
         "time",
@@ -153,6 +153,7 @@ function App() {
         })
       );
     }
+
     getDateDiff();
     getWeekDiff();
 
@@ -164,7 +165,7 @@ function App() {
   }, [submit, deleteState]);
 
   useEffect(() => {
-    if (isHover) {
+    if (isHover === true) {
       textHoverAnimation.start({ y: -100, display: "none" });
       IconHoverAnimation.start({ y: 0, display: "block" });
     } else {
@@ -183,10 +184,10 @@ function App() {
     <Page>
       <MainContainer>
         <Header />
+
         <GridContainer>
           {characterNameArray.map((item, index) => {
             const itemArray = JSON.parse(localStorage.getItem(item));
-
             return (
               itemArray !== null && (
                 <CardKeyContainer key={itemArray?.order}>
@@ -202,60 +203,74 @@ function App() {
               )
             );
           })}
-          <SubmitContainer
-            loading={loading ? 1 : 0}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.4,
-                delay: 0.1 * (characterNameArray.length + 1),
-              },
-            }}
-          >
-            {loading ? (
-              <Spinner />
-            ) : (
-              <>
-                <InputForm>
-                  <Input
-                    placeholder="캐릭터명"
-                    type="text"
-                    value={characterName}
-                    onChange={(e) => {
-                      setCharacterName(e.target.value);
-                    }}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter" && characterName !== "") {
-                        addCharacter();
-                        initializeCharacterInfo();
-                      }
-                    }}
-                  />
-                </InputForm>
-                <Button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onHoverStart={() => setIsHover(true)}
-                  onHoverEnd={() => setIsHover(false)}
-                  onClick={() => {
-                    if (characterName !== "") {
-                      addCharacter();
-                      initializeCharacterInfo();
-                    }
-                  }}
-                >
-                  <motion.p animate={textHoverAnimation}>등록</motion.p>
-                  <motion.div animate={IconHoverAnimation}>
-                    <CheckIcon />
-                  </motion.div>
-                </Button>
-              </>
-            )}
-          </SubmitContainer>
+          <CardKeyContainer>
+            <SubmitContainer
+              loading={loading ? 1 : 0}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.4,
+                  delay: 0.1 * (characterNameArray.length + 1),
+                },
+              }}
+            >
+              {loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <InputForm>
+                    <Input
+                      placeholder="캐릭터명"
+                      type="text"
+                      value={characterName}
+                      onChange={(e) => {
+                        setCharacterName(e.target.value);
+                      }}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter" && characterName !== "") {
+                          addCharacter();
+                          initializeCharacterInfo();
+                        }
+                      }}
+                    />
+                    <Button
+                      style={{ display: loading ? "none" : "flex" }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onHoverStart={() => setIsHover(true)}
+                      onHoverEnd={() => setIsHover(false)}
+                      onClick={() => {
+                        if (characterName !== "") {
+                          addCharacter();
+                          initializeCharacterInfo();
+                        }
+                      }}
+                    >
+                      <motion.p
+                        animate={textHoverAnimation}
+                        initial={{ y: 0 }}
+                        style={{ display: !isHover ? "flex" : "none" }}
+                      >
+                        등록
+                      </motion.p>
+                      <motion.div
+                        animate={IconHoverAnimation}
+                        initial={{ y: 100 }}
+                        style={{ display: isHover ? "flex" : "none" }}
+                      >
+                        <CheckIcon />
+                      </motion.div>
+                    </Button>
+                  </InputForm>
+                </>
+              )}
+            </SubmitContainer>
+          </CardKeyContainer>
         </GridContainer>
-        <Footer hardReset={doHardRest} />
+
+        <Footer hardReset={doHardReset} />
       </MainContainer>
     </Page>
   );
