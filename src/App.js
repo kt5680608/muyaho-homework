@@ -142,13 +142,17 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem(
-      "time",
-      JSON.stringify({
-        initialTime: "September 20, 2022 06:00:00",
-        initialWeek: "September 20, 2022 06:00:00",
-      })
-    );
+    const timeData = JSON.parse(localStorage.getItem("time"));
+
+    if (timeData === null) {
+      localStorage.setItem(
+        "time",
+        JSON.stringify({
+          initialTime: "September 20, 2022 06:00:00",
+          initialWeek: "September 20, 2022 06:00:00",
+        })
+      );
+    }
     getDateDiff();
     getWeekDiff();
 
@@ -239,8 +243,6 @@ function App() {
                     if (characterName !== "") {
                       addCharacter();
                       initializeCharacterInfo();
-                    } else {
-                      localStorage.clear();
                     }
                   }}
                 >

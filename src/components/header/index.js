@@ -4,6 +4,7 @@ function Header() {
   return (
     <TitleContainer>
       <Logo
+        whileHover={{ scale: 1.3, rotate: 360 }}
         onClick={() => {
           window.scrollTo({
             top: 0,

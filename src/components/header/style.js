@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const TitleContainer = styled.div`
   color: var(--g-color-background);
@@ -20,7 +21,8 @@ export const MainTitle = styled.h1`
   font-size: 16px;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled(motion.div)`
+  cursor: pointer;
   width: 36px;
   height: 36px;
   background-color: var(--g-color-logo);

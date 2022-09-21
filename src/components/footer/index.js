@@ -14,11 +14,11 @@ function Footer(props) {
 
   useEffect(() => {
     if (isHover) {
-      copyrightAnimation.start({ y: -100, display: "none" });
+      copyrightAnimation.start({ y: -60, display: "none" });
       errorMessageAnimation.start({ y: 0, display: "block" });
     } else {
       copyrightAnimation.start({ y: 0, display: "block" });
-      errorMessageAnimation.start({ y: 100, display: "none" });
+      errorMessageAnimation.start({ y: 60, display: "none" });
     }
   }, [isHover]);
   return (
