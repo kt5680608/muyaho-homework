@@ -4,14 +4,14 @@ export const dataForm = {
   order: 0,
   work: [
     {
-      name: "카오스던전",
+      name: "카던",
       doWork: false,
       limit: 0,
       reset: "day",
       type: "non-laid",
     },
     {
-      name: "가디언토벌",
+      name: "가토",
       doWork: false,
       limit: 0,
       reset: "day",
@@ -20,21 +20,21 @@ export const dataForm = {
     { name: "에포나", doWork: false, limit: 0, reset: "day", type: "non-laid" },
     { name: "발탄", doWork: false, limit: 1415, reset: "week", type: "laid" },
     {
-      name: "비아키스",
+      name: "비아",
       doWork: false,
       limit: 1430,
       reset: "week",
       type: "laid",
     },
     {
-      name: "쿠크세이튼",
+      name: "쿠크",
       doWork: false,
       limit: 1475,
       reset: "week",
       type: "laid",
     },
     {
-      name: "아브렐슈드",
+      name: "아브",
       doWork: false,
       limit: 1490,
       reset: "week",
@@ -55,14 +55,14 @@ export const dataForm = {
       type: "abyss",
     },
     {
-      name: "아르고스",
+      name: "알고",
       doWork: false,
       limit: 1375,
       reset: "week",
       type: "abyss",
     },
     {
-      name: "6종 카드작",
+      name: "6종",
       doWork: false,
       limit: 0,
       reset: "week",

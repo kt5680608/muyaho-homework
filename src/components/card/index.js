@@ -15,10 +15,11 @@ import { BsCheck2 } from "react-icons/bs";
 import { motion, useAnimation } from "framer-motion";
 function Card(props) {
   const [data, setData] = useState(
-    JSON.parse(localStorage.getItem(props.item))
+    JSON.parse(localStorage.getItem(props?.item))
   );
   const [workArray, setWorkArray] = useState(data?.work);
   const [reset, setReset] = useState(props.reset);
+  const [preventClick, setPreventClick] = useState(false);
   const [deleteState, setDeleteState] = useState(props.delete);
   const onChangeArrayValue = (index) => {
     const tmpArray = [...workArray];
@@ -31,14 +32,16 @@ function Card(props) {
   const mainContainerAnimation = useAnimation();
   const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
-    setData(JSON.parse(localStorage.getItem(props.item)));
+    setData(JSON.parse(localStorage.getItem(props?.item)));
     setReset(props.reset);
     setDeleteState(props.delete);
     if (reset) {
       setWorkArray(data?.work);
     }
   }, [props.arrayLength, props.reset, props.delete]);
-
+  useEffect(() => {
+    setPreventClick(!props.onDrag);
+  }, [props.onDrag]);
   useEffect(() => {
     if (isHover) {
       textHoverAnimation.start({ y: -100, display: "none" });
@@ -53,7 +56,7 @@ function Card(props) {
     if (!isOpen) {
       mainContainerAnimation.start({ height: "30px" });
     } else {
-      mainContainerAnimation.start({ height: "360px" });
+      mainContainerAnimation.start({ height: "100%" });
     }
   });
   return (
@@ -68,7 +71,9 @@ function Card(props) {
       <CardHeaderContainer
         whileHover={{ scale: 1.1 }}
         onClick={() => {
-          setIsOpen(!isOpen);
+          if (preventClick) {
+            setIsOpen(!isOpen);
+          }
         }}
       >
         <CharacterName>{data?.name}</CharacterName>
@@ -127,9 +132,8 @@ function Card(props) {
       <WorkContainer style={{ display: isOpen ? "grid" : "none" }}>
         {data?.work.map((item, index) => {
           return (
-            data.level >= item?.limit &&
             item.type === "laid" && (
-              <CardDetail>
+              <CardDetail level={data?.level} limit={item?.limit}>
                 <CardDetailInfo style={{ color: " white" }}>
                   {item.name}
                 </CardDetailInfo>

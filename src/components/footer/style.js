@@ -1,16 +1,12 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 export const MainFooterContainer = styled.div`
-  overflow: hidden;
   width: 100%;
-  height: 60px;
-  background-color: var(--g-color-background);
+  height: 30px;
+  padding: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: sticky;
-  bottom: 0;
-  padding: 12px 0 12px 0;
 `;
 
 export const FooterInfoParagraph = styled(motion.p)`

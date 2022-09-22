@@ -29,10 +29,10 @@ export const GlobalStyles = createGlobalStyle`
       background-color: #1a1a1a;
       max-width: 100vw;
       flex-direction: column;
-      overflow-x: hidden;
       align-items: center;
       margin: 0;
       padding: 0;
+      overflow-x: visible;
       
       @supports (-webkit-touch-callout: none) {
         min-height: -webkit-fill-available;
@@ -63,6 +63,15 @@ export const GlobalStyles = createGlobalStyle`
       margin: 0;
       padding: 0;
     }
+    ul{
+      display: flex;
+      
+      align-items: space-evenly;
+      grid-gap: 12px;
+      width: 100%;
+      height: 100%
+    }
+    
     p{
         font-family: sans-serif;
         margin: 0;
@@ -89,37 +98,35 @@ export const GlobalStyles = createGlobalStyle`
 
 export const GridContainer = styled(motion.div)`
   width: 96%;
+  height: 70%;
   display: flex;
-  height: 102%;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 36px;
-  overflow: hidden;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
 `;
 
 export const Input = styled.input`
   background-color: white;
-  height: 24px;
+  height: 18px;
   padding: 6px;
   border: none;
   margin-right: 12px;
-  border-radius: 24px;
+  border-radius: 6px;
 `;
 
 export const Button = styled(motion.div)`
   overflow: hidden;
   cursor: pointer;
   background-color: ${(props) => (props.type === "delete" ? "red" : "blue")};
-  box-sizing: border-box;
-  height: 36px;
-  width: 72px;
+  height: 18px;
+  width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   border: none;
-  padding: 12px;
+  padding: 6px;
   color: white;
   font-family: "REGULAR";
   border-radius: 24px;
@@ -129,33 +136,31 @@ export const SubmitContainer = styled(motion.div)`
   height: 30px;
   width: 100%;
   background-color: #141414;
-  border-radius: 24px;
-  padding: 36px;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
   justify-content: ${(props) => (props.loading ? "center" : "center")};
 `;
 export const MainContainer = styled.div`
   width: 96%;
-  position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
 `;
 
 export const Page = styled.div`
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--g-color-background);
   display: flex;
   justify-content: center;
 `;
 
 export const CardKeyContainer = styled.div`
+  height: 100%;
   display: flex;
   justify-content: center;
-  width: 30%;
 `;
 
 export const InputForm = styled.form`

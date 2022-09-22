@@ -15,7 +15,7 @@ import {
   InputForm,
   CheckIcon,
 } from "./global-styles";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, Reorder } from "framer-motion";
 
 function App() {
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
@@ -27,11 +27,15 @@ function App() {
   const [deleteState, setDeleteState] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [onDrag, setOnDrag] = useState(false);
   const [characterNameArray, setCharacterNameArray] = useState(
-    Object.keys(localStorage).filter((item) => {
-      return item !== "time";
-    })
+    Object.keys(localStorage)
+      .filter((item) => {
+        return item !== "time" && item !== "sortedNameArray";
+      })
+      .sort()
   );
+  const [sortedNameArray, setSortedNameArray] = useState([]);
   const [isHover, setIsHover] = useState(false);
   const textHoverAnimation = useAnimation();
   const IconHoverAnimation = useAnimation();
@@ -63,14 +67,25 @@ function App() {
   // 캐릭터 추가 함수
   const addCharacter = async () => {
     await getHtml(characterName);
+
     newData.name = characterName;
-    newData.order = Object.keys(localStorage).length + 1;
+    newData.order = Object.keys(localStorage).length - 1;
     setSubmit(!submit);
     await localStorage.setItem(characterName, JSON.stringify(newData));
+    localStorage.setItem(
+      "sortedNameArray",
+      JSON.stringify([...sortedNameArray, characterName])
+    );
+    console.log(JSON.parse(localStorage.getItem("sortedNameArray")));
   };
 
   const deleteCharacter = (item) => {
     localStorage.removeItem(item);
+
+    const data = sortedNameArray.filter((value) => {
+      return value !== item;
+    });
+    localStorage.setItem("sortedNameArray", JSON.stringify(data));
     setDeleteState(!deleteState);
   };
   const getDateDiff = () => {
@@ -130,6 +145,7 @@ function App() {
     }
   };
 
+  // 전부 지우기
   const doHardReset = () => {
     localStorage.clear();
     setHardReset(true);
@@ -144,6 +160,11 @@ function App() {
   useEffect(() => {
     setIsHover(false);
     const timeData = JSON.parse(localStorage.getItem("time"));
+    const nameData = JSON.parse(localStorage.getItem("sortedNameArray"));
+    if (nameData === null) {
+      localStorage.setItem("sortedNameArray", JSON.stringify([]));
+    }
+
     if (timeData === null) {
       localStorage.setItem(
         "time",
@@ -159,11 +180,12 @@ function App() {
 
     setCharacterNameArray(
       Object.keys(localStorage).filter((item) => {
-        return item !== "time";
+        return item !== "time" && item !== "sortedNameArray";
       })
     );
+    setSortedNameArray(JSON.parse(localStorage.getItem("sortedNameArray")));
   }, [submit, deleteState]);
-
+  useEffect(() => {}, []);
   useEffect(() => {
     if (isHover === true) {
       textHoverAnimation.start({ y: -100, display: "none" });
@@ -180,29 +202,52 @@ function App() {
     }
   }, [hardReset]);
 
+  useEffect(() => {
+    if (onDrag) {
+      localStorage.setItem("sortedNameArray", JSON.stringify(sortedNameArray));
+    }
+  }, [sortedNameArray]);
+
   return (
     <Page>
       <MainContainer>
         <Header />
-
         <GridContainer>
-          {characterNameArray.map((item, index) => {
-            const itemArray = JSON.parse(localStorage.getItem(item));
-            return (
-              itemArray !== null && (
-                <CardKeyContainer key={itemArray?.order}>
-                  <Card
-                    reset={reset}
-                    delete={deleteState}
-                    deleteCharacter={deleteCharacter}
-                    item={item}
-                    delay={0.1 * index}
-                    arrayLength={characterNameArray.length}
-                  />
-                </CardKeyContainer>
-              )
-            );
-          })}
+          <Reorder.Group
+            axis="x"
+            values={sortedNameArray}
+            onReorder={setSortedNameArray}
+          >
+            {sortedNameArray?.map((item, index) => {
+              const itemArray = JSON.parse(localStorage.getItem(item));
+              return (
+                itemArray !== null && (
+                  <Reorder.Item
+                    value={item}
+                    key={item}
+                    onDragStart={() => {
+                      setOnDrag(true);
+                    }}
+                    onDragEnd={() => {
+                      setOnDrag(false);
+                    }}
+                  >
+                    <CardKeyContainer key={itemArray?.order}>
+                      <Card
+                        reset={reset}
+                        delete={deleteState}
+                        deleteCharacter={deleteCharacter}
+                        item={item}
+                        delay={0.1 * index}
+                        onDrag={onDrag}
+                        arrayLength={characterNameArray.length}
+                      />
+                    </CardKeyContainer>
+                  </Reorder.Item>
+                )
+              );
+            })}
+          </Reorder.Group>
           <CardKeyContainer>
             <SubmitContainer
               loading={loading ? 1 : 0}

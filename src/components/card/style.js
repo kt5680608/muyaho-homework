@@ -3,13 +3,12 @@ import { motion } from "framer-motion";
 import { FaTrashAlt } from "react-icons/fa";
 
 export const MainCardContainer = styled(motion.div)`
-  margin: 0;
-  height: 360px;
-  width: 100%;
+  min-width: 168px;
+  height: 100%;
   background-color: #141414;
-  border-radius: 24px;
-  gap: 24px;
-  padding: 36px;
+  border-radius: 12px;
+  gap: 6px;
+  padding: 12px 6px 12px 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,39 +21,43 @@ export const CardHeaderContainer = styled(motion.div)`
   height: 30px;
   width: 100%;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 export const WorkContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 18px;
+  display: flex;
+  justify-content: center;
+  grid-gap: 12px;
   width: 100%;
+  min-height: 20%;
 `;
 
 export const CardDetail = styled.div`
   display: flex;
+  height: 24px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  visibility: ${(props) => props.level < props.limit && "hidden"};
 `;
 export const CardDetailInfo = styled.span`
   font-family: "REGULAR";
-  font-size: 14px;
+  font-size: 12px;
   margin-right: 8px;
 `;
 export const CharacterName = styled.h2`
   font-family: "BLACK";
   color: white;
-  flex-basis: 100%;
   text-align: center;
+  font-size: 14px;
 `;
 
 export const WorkInput = styled(motion.div)`
   border: none;
   cursor: pointer;
   background-color: ${(props) => (props.checked ? "blue" : "white")};
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -67,12 +70,6 @@ export const MainTitle = styled.h1`
 
   color: white;
   font-size: 24px;
-`;
-export const GridContainer = styled.div`
-  width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
 `;
 
 export const Input = styled.input`
