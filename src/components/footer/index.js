@@ -3,6 +3,7 @@ import {
   FooterInfoParagraph,
   MainFooterContainer,
   RefreshButton,
+  FooterInfoContainer,
 } from "./style";
 import { useAnimation } from "framer-motion";
 
@@ -23,17 +24,20 @@ function Footer(props) {
   }, [isHover]);
   return (
     <MainFooterContainer>
-      <FooterInfoParagraph animate={copyrightAnimation}>
-        Copyright 2022. 2초만기다려주세요 All Rights Reserved.
-      </FooterInfoParagraph>
-      <FooterInfoParagraph animate={errorMessageAnimation}>
-        에러가 발생하셨나요? 버튼을 클릭하시면 모든 데이터가 초기화됩니다.
-      </FooterInfoParagraph>
+      <FooterInfoContainer>
+        <FooterInfoParagraph animate={copyrightAnimation}>
+          Copyright 2022. 2초만기다려주세요 All Rights Reserved.
+        </FooterInfoParagraph>
+        <FooterInfoParagraph animate={errorMessageAnimation}>
+          에러가 발생하셨나요? 버튼을 클릭하시면 모든 데이터가 초기화됩니다.
+        </FooterInfoParagraph>
+      </FooterInfoContainer>
+
       <RefreshButton
         onClick={() => {
           props.hardReset();
         }}
-        whileHover={{ rotate: 360, scale: 1.2 }}
+        whileHover={{ rotate: 360 }}
         onHoverStart={() => setIsHover(true)}
         onHoverEnd={() => setIsHover(false)}
       >

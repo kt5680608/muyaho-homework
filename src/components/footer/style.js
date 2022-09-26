@@ -7,6 +7,16 @@ export const MainFooterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
+`;
+
+export const FooterInfoContainer = styled.div`
+  overflow: hidden;
+  height: 100%;
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const FooterInfoParagraph = styled(motion.p)`
@@ -19,6 +29,7 @@ export const RefreshButton = styled(motion.div)`
   height: 48px;
   cursor: pointer;
   position: sticky;
+  margin-bottom: 9px;
   top: 0;
   left: 94%;
   display: flex;

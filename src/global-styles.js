@@ -31,8 +31,8 @@ export const GlobalStyles = createGlobalStyle`
       flex-direction: column;
       align-items: center;
       margin: 0;
+      overflow: hidden;
       padding: 0;
-      overflow-x: visible;
       
       @supports (-webkit-touch-callout: none) {
         min-height: -webkit-fill-available;
@@ -55,7 +55,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     hr{
-        margin: 0px;
+        margin: 6px 0;
         width: 100%;
         border: 1px solid var(--g-color-background)
         }
@@ -65,7 +65,6 @@ export const GlobalStyles = createGlobalStyle`
     }
     ul{
       display: flex;
-      
       align-items: space-evenly;
       grid-gap: 12px;
       width: 100%;
@@ -84,11 +83,13 @@ export const GlobalStyles = createGlobalStyle`
     }
     li{
         list-style: none;
+        height: min-content;
     }
     ul{
         list-style  : none;
         margin: 0;
         padding: 0;
+        width: min-content;
     }
     input:focus{
         outline: none;
@@ -97,9 +98,10 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const GridContainer = styled(motion.div)`
-  width: 96%;
   height: 70%;
   display: flex;
+  width: min-content;
+
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
@@ -111,6 +113,7 @@ export const Input = styled.input`
   height: 18px;
   padding: 6px;
   border: none;
+  width: 96px;
   margin-right: 12px;
   border-radius: 6px;
 `;
@@ -135,17 +138,20 @@ export const Button = styled(motion.div)`
 export const SubmitContainer = styled(motion.div)`
   height: 30px;
   width: 100%;
-  background-color: #141414;
+  background-color: ${(props) =>
+    props.loading ? "var(--g-color-background)" : "#141414"};
   border-radius: 12px;
-  padding: 12px;
+  padding: 12px 6px;
   display: flex;
-  justify-content: ${(props) => (props.loading ? "center" : "center")};
+  justify-content: center;
+  align-items: center;
 `;
 export const MainContainer = styled.div`
   width: 96%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -157,8 +163,7 @@ export const Page = styled.div`
   justify-content: center;
 `;
 
-export const CardKeyContainer = styled.div`
-  height: 100%;
+export const CardKeyContainer = styled(motion.div)`
   display: flex;
   justify-content: center;
 `;

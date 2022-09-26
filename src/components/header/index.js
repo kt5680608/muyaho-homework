@@ -8,7 +8,7 @@ function Header() {
         onClick={() => {
           window.scrollTo({
             top: 0,
-            left: 0,
+            left: 100,
             behavior: "smooth",
           });
         }}

@@ -28,6 +28,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [onDrag, setOnDrag] = useState(false);
+
   const [characterNameArray, setCharacterNameArray] = useState(
     Object.keys(localStorage)
       .filter((item) => {
@@ -211,8 +212,15 @@ function App() {
   return (
     <Page>
       <MainContainer>
-        <Header />
-        <GridContainer>
+        <Header nameArrayLength={sortedNameArray.length} />
+        <GridContainer
+          whileHover={{ cursor: "grab" }}
+          drag="x"
+          dragConstraints={{
+            left: -characterNameArray.length * 60,
+            right: 0,
+          }}
+        >
           <Reorder.Group
             axis="x"
             values={sortedNameArray}
@@ -296,7 +304,10 @@ function App() {
                       <motion.p
                         animate={textHoverAnimation}
                         initial={{ y: 0 }}
-                        style={{ display: !isHover ? "flex" : "none" }}
+                        style={{
+                          display: !isHover ? "flex" : "none",
+                          fontSize: "12px",
+                        }}
                       >
                         등록
                       </motion.p>

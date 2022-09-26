@@ -48,9 +48,9 @@ export const dataForm = {
       type: "laid",
     },
     {
-      name: "카양겔",
+      name: "6종",
       doWork: false,
-      limit: 1475,
+      limit: 0,
       reset: "week",
       type: "abyss",
     },
@@ -62,9 +62,9 @@ export const dataForm = {
       type: "abyss",
     },
     {
-      name: "6종",
+      name: "카양겔",
       doWork: false,
-      limit: 0,
+      limit: 1475,
       reset: "week",
       type: "abyss",
     },

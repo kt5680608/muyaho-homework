@@ -27,6 +27,7 @@ function Card(props) {
     setWorkArray(tmpArray);
   };
   const [isHover, setIsHover] = useState(false);
+
   const textHoverAnimation = useAnimation();
   const IconHoverAnimation = useAnimation();
   const mainContainerAnimation = useAnimation();
@@ -58,9 +59,13 @@ function Card(props) {
     } else {
       mainContainerAnimation.start({ height: "100%" });
     }
-  });
+  }, [isOpen]);
+
   return (
     <MainCardContainer
+      whileHover={{
+        scale: 1.02,
+      }}
       animate={mainContainerAnimation}
       onClick={() => {
         if (isOpen === false) {
@@ -128,7 +133,7 @@ function Card(props) {
           );
         })}
       </WorkContainer>
-      <hr style={{ display: isOpen ? "grid" : "none" }} />
+      <hr style={{ display: isOpen ? "block" : "none" }} />
       <WorkContainer style={{ display: isOpen ? "grid" : "none" }}>
         {data?.work.map((item, index) => {
           return (
@@ -177,13 +182,12 @@ function Card(props) {
           );
         })}
       </WorkContainer>
-      <hr style={{ display: isOpen ? "grid" : "none" }} />
+      <hr style={{ display: isOpen ? "block" : "none" }} />
       <WorkContainer style={{ display: isOpen ? "grid" : "none" }}>
         {data?.work.map((item, index) => {
           return (
-            data.level >= item?.limit &&
             item.type === "abyss" && (
-              <CardDetail>
+              <CardDetail level={data?.level} limit={item?.limit}>
                 <CardDetailInfo style={{ color: " white" }}>
                   {item.name}
                 </CardDetailInfo>
@@ -227,6 +231,7 @@ function Card(props) {
           );
         })}
       </WorkContainer>
+      <hr style={{ display: isOpen ? "block" : "none" }} />
       <Button
         style={{ display: isOpen ? "flex" : "none" }}
         initial={{ y: 0 }}
@@ -238,9 +243,11 @@ function Card(props) {
           props.deleteCharacter(props.item);
         }}
       >
-        <motion.p animate={textHoverAnimation}>삭제</motion.p>
+        <motion.p animate={textHoverAnimation} style={{ fontSize: "12px" }}>
+          삭제
+        </motion.p>
         <motion.div animate={IconHoverAnimation}>
-          <TrashIcon />
+          <TrashIcon size={12} />
         </motion.div>
       </Button>
     </MainCardContainer>
