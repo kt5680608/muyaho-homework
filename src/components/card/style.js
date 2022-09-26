@@ -13,6 +13,7 @@ export const MainCardContainer = styled(motion.div)`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  overflow-x: hidden;
 `;
 
 export const CardHeaderContainer = styled(motion.div)`

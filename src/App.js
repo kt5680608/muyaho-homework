@@ -29,7 +29,7 @@ function App() {
   const [submit, setSubmit] = useState(false);
   const [onDrag, setOnDrag] = useState(false);
   const inputRef = useRef(null);
-  const firstChildRef = useRef(null);
+  const gridContainerRef = useRef(null);
 
   const [characterNameArray, setCharacterNameArray] = useState(
     Object.keys(localStorage)
@@ -216,17 +216,11 @@ function App() {
       <MainContainer>
         <Header nameArrayLength={sortedNameArray.length} />
         <GridContainer
-          whileHover={{ cursor: "grab" }}
-          initial={{
-            x:
-              characterNameArray.length > 6
-                ? characterNameArray.length * 15
-                : 0,
-          }}
+          ref={gridContainerRef}
           drag="x"
           dragConstraints={{
-            left: characterNameArray.length * -15,
-            right: characterNameArray.length * 15,
+            left: (gridContainerRef.current?.offsetWidth / 4) * -1,
+            right: gridContainerRef.current?.offsetWidth / 4,
           }}
         >
           <Reorder.Group

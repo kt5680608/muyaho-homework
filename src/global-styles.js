@@ -98,6 +98,7 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const GridContainer = styled(motion.div)`
+  cursor: grab;
   height: 70%;
   min-width: 100%;
   display: flex;
