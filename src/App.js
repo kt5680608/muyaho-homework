@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, Footer, Spinner, Header } from "./components";
 import * as cheerio from "cheerio";
 import { dataForm } from "./data/data-form";
@@ -28,6 +28,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [onDrag, setOnDrag] = useState(false);
+  const inputRef = useRef(null);
 
   const [characterNameArray, setCharacterNameArray] = useState(
     Object.keys(localStorage)
@@ -68,7 +69,6 @@ function App() {
   // 캐릭터 추가 함수
   const addCharacter = async () => {
     await getHtml(characterName);
-
     newData.name = characterName;
     newData.order = Object.keys(localStorage).length - 1;
     setSubmit(!submit);
@@ -77,7 +77,6 @@ function App() {
       "sortedNameArray",
       JSON.stringify([...sortedNameArray, characterName])
     );
-    console.log(JSON.parse(localStorage.getItem("sortedNameArray")));
   };
 
   const deleteCharacter = (item) => {
@@ -185,8 +184,10 @@ function App() {
       })
     );
     setSortedNameArray(JSON.parse(localStorage.getItem("sortedNameArray")));
+    if (inputRef.current !== null) {
+      inputRef.current.focus();
+    }
   }, [submit, deleteState]);
-  useEffect(() => {}, []);
   useEffect(() => {
     if (isHover === true) {
       textHoverAnimation.start({ y: -100, display: "none" });
@@ -217,8 +218,8 @@ function App() {
           whileHover={{ cursor: "grab" }}
           drag="x"
           dragConstraints={{
-            left: -characterNameArray.length * 60,
-            right: 0,
+            left: characterNameArray.length * -50,
+            right: characterNameArray.length * 50,
           }}
         >
           <Reorder.Group
@@ -276,6 +277,7 @@ function App() {
                   <InputForm>
                     <Input
                       placeholder="캐릭터명"
+                      ref={inputRef}
                       type="text"
                       value={characterName}
                       onChange={(e) => {
