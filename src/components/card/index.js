@@ -57,7 +57,7 @@ function Card(props) {
     if (!isOpen) {
       mainContainerAnimation.start({ height: "30px" });
     } else {
-      mainContainerAnimation.start({ height: "100%" });
+      mainContainerAnimation.start({ height: "528px" });
     }
   }, [isOpen]);
 
