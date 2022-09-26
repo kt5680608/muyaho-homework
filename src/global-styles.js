@@ -99,6 +99,7 @@ export const GlobalStyles = createGlobalStyle`
 
 export const GridContainer = styled(motion.div)`
   height: 70%;
+  min-width: 100%;
   display: flex;
   width: min-content;
   flex-direction: row;
