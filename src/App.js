@@ -217,11 +217,16 @@ function App() {
         <Header nameArrayLength={sortedNameArray.length} />
         <GridContainer
           whileHover={{ cursor: "grab" }}
-          initial={{ x: characterNameArray.length * 40 }}
+          initial={{
+            x:
+              characterNameArray.length > 6
+                ? characterNameArray.length * 15
+                : 0,
+          }}
           drag="x"
           dragConstraints={{
-            left: characterNameArray.length * -40,
-            right: characterNameArray.length * 40,
+            left: characterNameArray.length * -15,
+            right: characterNameArray.length * 15,
           }}
         >
           <Reorder.Group
