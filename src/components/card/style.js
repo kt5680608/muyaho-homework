@@ -35,6 +35,7 @@ export const WorkContainer = styled.div`
 export const CardDetail = styled.div`
   display: flex;
   height: 24px;
+  width: 66px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

@@ -101,7 +101,6 @@ export const GridContainer = styled(motion.div)`
   height: 70%;
   display: flex;
   width: min-content;
-
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
