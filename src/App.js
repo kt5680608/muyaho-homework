@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Card, Footer, Spinner, Header } from "./components";
 import * as cheerio from "cheerio";
-import { dataForm } from "./data/data-form";
+import { dataForm, asciiArt } from "./data/data-form";
 import axios from "axios";
 
 import {
@@ -211,6 +211,10 @@ function App() {
     }
   }, [sortedNameArray]);
 
+  useEffect(() => {
+    console.log(asciiArt);
+  }, []);
+
   return (
     <Page>
       <MainContainer>
@@ -219,8 +223,11 @@ function App() {
           ref={gridContainerRef}
           drag="x"
           dragConstraints={{
-            left: (gridContainerRef.current?.offsetWidth / 4) * -1,
-            right: gridContainerRef.current?.offsetWidth / 4,
+            left:
+              (gridContainerRef.current?.offsetWidth / sortedNameArray.length) *
+              -1,
+            right:
+              gridContainerRef.current?.offsetWidth / sortedNameArray.length,
           }}
         >
           <Reorder.Group
