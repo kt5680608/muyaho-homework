@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Card, Footer, Spinner, Header } from "./components";
 import * as cheerio from "cheerio";
-import { dataForm, asciiArt } from "./data/data-form";
+import { dataForm, asciiArt, asciiText } from "./data/data-form";
 import axios from "axios";
 
 import {
@@ -212,6 +212,7 @@ function App() {
   }, [sortedNameArray]);
 
   useEffect(() => {
+    console.log(asciiText);
     console.log(asciiArt);
   }, []);
 
