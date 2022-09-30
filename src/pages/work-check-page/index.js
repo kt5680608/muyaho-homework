@@ -20,7 +20,7 @@ import { motion, useAnimation, Reorder } from "framer-motion";
 function App() {
   const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
   const newData = dataForm;
-  const [characterName, setCharacterName] = useState(""); // 캐릭터이름 input
+  const [characterName, setCharacterName] = useState(""); // 캐릭터이름 Input
   const [_, setCharacterLevel] = useState(0); // 캐릭터레벨 Input
   const [reset, setReset] = useState(false);
   const [hardReset, setHardReset] = useState(false);
@@ -102,7 +102,7 @@ function App() {
       setReset(true);
 
       let updatedDate = new Date();
-      updatedDate.setDate(initialDate.getDate(initialDate) + 1);
+
       localStorage.setItem(
         "time",
         JSON.stringify({ initialTime: updatedDate, initialWeek: initialDate })
@@ -117,7 +117,6 @@ function App() {
         localStorage.setItem(item, JSON.stringify(data));
       });
     }
-    return diffDate;
   };
 
   const getWeekDiff = () => {
@@ -130,7 +129,6 @@ function App() {
     if (diffWeek >= 7) {
       setReset(true);
       let updatedWeek = new Date();
-      updatedWeek.setDate(initialWeek.getDate() + 7);
       localStorage.setItem(
         "time",
         JSON.stringify({ initialTime: initialWeek, initialWeek: updatedWeek })
@@ -192,7 +190,6 @@ function App() {
     }
 
     setGridContainerWidth(gridContainerRef?.current.offsetWidth);
-    console.log(sortedNameArray.length * 180);
   }, [submit, deleteState, gridContainerWidth]);
 
   useEffect(() => {
